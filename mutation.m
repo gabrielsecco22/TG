@@ -1,6 +1,14 @@
 function individual = mutation(individual, grain)
     
+<<<<<<< HEAD
     probability = 0.06;
+=======
+<<<<<<< HEAD
+    probability = 0.1;
+=======
+    probability = 0.05;
+>>>>>>> 253bd49192da9aa84a2ea0d14763aedb820b0d89
+>>>>>>> cbe8db25eb5ffd821024451d9b608f3cb726efb4
     
     for k=1:size(individual)
         
