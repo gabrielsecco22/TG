@@ -1,6 +1,6 @@
 function individual = mutation(individual, grain)
     
-    probability = 0.03;
+    probability = 0.1;
     
     for k=1:size(individual)
         
