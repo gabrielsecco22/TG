@@ -6,7 +6,7 @@
     ymax= 562;
 
     %Solution Plot
-    figure(3);
+    figure(1);
     clf
     hold on
     
@@ -27,7 +27,7 @@
     
   
     
-    figure(6);
+    figure(2);
     hold off
     clf
     imshow(imrotate(table(:,:,1),90));
