@@ -1,10 +1,9 @@
-clear;
-
 fileName = 'teste';
 fileExt = '.mat';
 file = 'teste1.mat';
 figCoverageName = 'coverageteste';
 figCCName = 'ccteste';
+figAvgName = 'avgteste';
 figExt ='.jpg';
 
 for i = 1:2
@@ -40,4 +39,5 @@ for i = 1:2
     tempoFase2 = toc - tempo_Fase1
     hgexport(figure(3), strcat(figCoverageName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
     hgexport(figure(6), strcat(figCCName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
+    hgexport(figure(7), strcat(figAvgName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
 end

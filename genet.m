@@ -3,7 +3,7 @@
     %Constants and variables
     table = evalin('base','table');
     num_individuals = 400;
-    num_iterations =50;
+    num_iterations =100;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');

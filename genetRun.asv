@@ -1,29 +1,12 @@
-clear;
-
 fileName = 'teste';
 fileExt = '.mat';
 file = 'teste1.mat';
 figCoverageName = 'coverageteste';
 figCCName = 'ccteste';
+figAvgName = 'avgteste';
 figExt ='.jpg';
 
 for i = 1:2
-    
-    clear('fileName');
-    clear('fileExt');
-    clear('file');
-    clear('figCoverageName');
-    clear('figCCName');
-    clear
-    
-    
-    
-    fileName = 'teste';
-    fileExt = '.mat';
-    file = 'teste1.mat';
-    figCoverageName = 'coverageteste';
-    figCCName = 'ccteste';
-    figExt ='.jpg';
     
     file = strcat(fileName,strcat(num2str(i),fileExt));
     
@@ -49,11 +32,12 @@ for i = 1:2
 
     while curr_fit < fit_perfect_solution
         n=n+1;
-        curr_fit=genet(n,range_router)
+        curr_fit=genet(n)
         fit_perfect_solution= 2*tam^2 + n^2
 
     end
     tempoFase2 = toc - tempo_Fase1
-    hgexport(figure(3), strcat(figCoverageName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
-    hgexport(figure(6), strcat(figCCName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
+    hgexport(figure(3), strcat(figCoverageName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'png');
+    hgexport(figure(6), strcat(figCCName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'tiff');
+    hgexport(figure(7), strcat(figAvgName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'tiff');
 end
