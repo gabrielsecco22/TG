@@ -1,4 +1,4 @@
-function fitness = fitness(individual,table,range_router)
+function [fitness,A] = fitness(individual,table)
 
 num_sensor = size(table,3)-1;
 coverage_list = zeros(1,num_sensor);
@@ -30,7 +30,7 @@ end
 
 Adj=zeros(num_rot);
 
-range_router=val
+range_router=evalin('base','range_router');
 vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
@@ -86,8 +86,9 @@ end
 
 B=largestcomponent(Adj);
 tam_cc=size(B,2);
+A=Adj
 
-fitness = 2*(sum(coverage_list))^2 + tam_cc^2;
+fitness = (sum(coverage_list))/num_sensor + tam_cc/num_rot;
 if fitness < 0
    fitness = 0; 
 end

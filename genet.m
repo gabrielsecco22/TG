@@ -2,14 +2,13 @@
     
     %Constants and variables
     table = evalin('base','table');
-    num_individuals = 100;
-    num_iterations = 100;
+    num_individuals = 400;
+    num_iterations =50;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');
     obs = evalin('base', 'obs');
     sens=evalin('base','sens');
-    
     
     %Plot variables
     xmin= -50;
@@ -20,10 +19,10 @@
     
     %First Individuals Generator
      population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers);
-     ini = round((9*num_individuals)/10);
-     for i=ini:num_individuals
-         population(i,:)=first_individuals(n_routers);
-     end
+%      ini = round((9*num_individuals)/10);
+%      for i=ini:num_individuals
+%          population(i,:)=first_individuals(n_routers);
+%      end
     
     
     
@@ -34,7 +33,9 @@
     fitness_values = zeros(num_individuals,1);
     new_generation = zeros(num_individuals,2*n_routers);
     
-
+    avg_fit = zeros(1,num_iterations);
+    max_fit_plot = zeros(1,num_iterations);
+    best_fit_plot = zeros(1,num_iterations);
     %Stopping criteria = number of generations
     for n=1:num_iterations
                
@@ -45,19 +46,19 @@
         %Fitness function evaluation for each individual
         tic
         for k=1:num_individuals
-           fitness_values(k,1) = fitness(population(k,:),table);
+           [fitness_values(k,1)] = fitness(population(k,:),table);
         end
         toc
         
         %population average fitness
-        avg_fit = sum(fitness_values)/num_individuals
+        avg_fit(n) = sum(fitness_values)/num_individuals;
         
 
         %Draw the individual with best fitness
         [max_fit,index_of_max]=max(fitness_values);
-        
+        max_fit_plot(n) =max_fit;
         if max_fit > best_fit
-            best_fit = max_fit
+            best_fit = max_fit;
             n;
             best_ind = population(index_of_max,:);
             %Perfect individual found
@@ -65,8 +66,9 @@
                 break;
             end
         end
-        %step_draw(population(best_individual,:));
-
+        
+        best_fit_plot(n) = best_fit;
+        
         %Choose the couples
         fitness_sum=sum(fitness_values);
         for m=1:num_individuals
@@ -128,7 +130,7 @@
         hold on
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
-    axis xy
+%     axis xy
     axis([xmin xmax ymin ymax])
     axis on
     
@@ -161,12 +163,20 @@
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
     
-    axis xy
+%     axis xy
     axis([xmin xmax ymin ymax])
     axis on
     
-        
-    
+    figure(7);
+    hold off
+    clf
+    hold on
+    h1=plot(avg_fit,'r');
+    h2=plot(max_fit_plot,'b');
+    set(h1,'Displayname','Fitness Médio');
+    set(h2,'Displayname','Fitness Máximo');
+    legend('Location','east')
+%     plot(best_fit_plot,'g');
     
 
 end
