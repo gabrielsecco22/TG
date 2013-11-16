@@ -3,7 +3,7 @@
     %Constants and variables
     table = evalin('base','table');
     num_individuals = 400;
-    num_iterations =200;
+    num_iterations =100;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');
@@ -37,6 +37,7 @@
     max_fit_plot = zeros(1,num_iterations);
     best_fit_plot = zeros(1,num_iterations);
     %Stopping criteria = number of generations
+    tic
     for n=1:num_iterations
                
         if mod(n,10)==0
@@ -44,11 +45,11 @@
         end
         
         %Fitness function evaluation for each individual
-        tic
+        
         for k=1:num_individuals
            [fitness_values(k,1)] = fitness(population(k,:),table);
         end
-        toc
+        
         
         %population average fitness
         avg_fit(n) = sum(fitness_values)/num_individuals;
@@ -98,6 +99,8 @@
         population = new_generation;
 
     end
+    
+    toc
     
     rout_list=[];
     
@@ -175,8 +178,9 @@
     h2=plot(max_fit_plot,'b');
     set(h1,'Displayname','Fitness Médio');
     set(h2,'Displayname','Fitness Máximo');
-    legend('Location','east')
+    legend('Location','southeast')
 %     plot(best_fit_plot,'g');
+    grid;
     
 
 end
