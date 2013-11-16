@@ -2,8 +2,8 @@
     
     %Constants and variables
     table = evalin('base','table');
-    num_individuals = 400;
-    num_iterations =100;
+    num_individuals = 800;
+    num_iterations =1000;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');
@@ -176,6 +176,7 @@
     hold on
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
+    axis([0 num_iterations 0 11])
     set(h1,'Displayname','Fitness Médio');
     set(h2,'Displayname','Fitness Máximo');
     legend('Location','southeast')
