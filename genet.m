@@ -2,8 +2,8 @@
     
     %Constants and variables
     table = evalin('base','table');
-    num_individuals = 800;
-    num_iterations =1000;
+    num_individuals = 3000;
+    num_iterations =6000;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');
@@ -45,11 +45,11 @@
         end
         
         %Fitness function evaluation for each individual
-        
+        tic
         for k=1:num_individuals
            [fitness_values(k,1)] = fitness(population(k,:),table);
         end
-        
+        toc
         
         %population average fitness
         avg_fit(n) = sum(fitness_values)/num_individuals;
