@@ -29,7 +29,7 @@ range_router=evalin('base','range_router');
 vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
-if (sum(coverage_list))/num_sensor > 0.95
+if (sum(coverage_list))/num_sensor > 0.90
     for i=1:num_rot
         for j=1:num_rot
 
