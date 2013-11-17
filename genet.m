@@ -38,7 +38,7 @@
     max_fit_plot = zeros(1,num_iterations);
     best_fit_plot = zeros(1,num_iterations);
     %Stopping criteria = number of generations
-    tic
+    total_time = 0;
     for n=1:num_iterations
                
         
@@ -49,6 +49,7 @@
            [fitness_values(k,1)] = fitness(population(k,:),table);
         end
         toc
+        
         
         %population average fitness
         avg_fit(n) = sum(fitness_values)/num_individuals;
@@ -108,10 +109,11 @@
         end
 
         population = new_generation;
+        total_time = total_time +toc;
 
     end
+    total_time
     
-    toc
     
     rout_list=[];
     
