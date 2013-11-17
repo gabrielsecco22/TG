@@ -17,11 +17,11 @@
     
     %First Individuals Generator
     
-     
-     if size(pop,1)==num_individuals
-        population = pop;
+     population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers);
+     if size(pop,1)==0
+         
      else
-        population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers); 
+         
      end
 
     
@@ -188,8 +188,8 @@
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
     axis([0 num_iterations 0 11])
-    set(h1,'Displayname','Fitness Médio');
-    set(h2,'Displayname','Fitness Máximo');
+    set(h1,'Displayname','Fitness M?dio');
+    set(h2,'Displayname','Fitness M?ximo');
     legend('Location','southeast')
 %     plot(best_fit_plot,'g');
     grid;
