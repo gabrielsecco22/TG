@@ -1,9 +1,9 @@
-    function [best_fit] = genet(n_routers)
+    function [best_fit] = genet(n_routers,num_iterations,num_individuals,num_teste,pop)
     
     %Constants and variables
     table = evalin('base','table');
-    num_individuals = 3000;
-    num_iterations =6000;
+    num_individuals;
+    num_iterations;
     grain = evalin('base', 'grain');
     range = evalin('base','range');
     range_router = evalin('base','range_router');
@@ -18,13 +18,14 @@
     
     
     %First Individuals Generator
+    
      population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers);
 %      ini = round((9*num_individuals)/10);
 %      for i=ini:num_individuals
 %          population(i,:)=first_individuals(n_routers);
 %      end
     
-    
+   
     
 
     %Initial allocations
@@ -40,9 +41,7 @@
     tic
     for n=1:num_iterations
                
-        if mod(n,10)==0
-            n
-        end
+        
         
         %Fitness function evaluation for each individual
         tic
@@ -53,6 +52,7 @@
         
         %population average fitness
         avg_fit(n) = sum(fitness_values)/num_individuals;
+        
         
 
         %Draw the individual with best fitness
@@ -69,6 +69,17 @@
         end
         
         best_fit_plot(n) = best_fit;
+        
+        
+        if mod(n,10)==0
+            
+            strcat('avg= ',num2str(avg_fit(n)),' best= ',num2str(best_fit),' iteration= ',num2str(n))
+            
+            if mod(n,50)==0
+                save(strcat('result_teste',num2str(num_teste),'.mat'),'best_ind','population');
+            end
+            
+        end
         
         %Choose the couples
         fitness_sum=sum(fitness_values);
@@ -177,8 +188,8 @@
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
     axis([0 num_iterations 0 11])
-    set(h1,'Displayname','Fitness Médio');
-    set(h2,'Displayname','Fitness Máximo');
+    set(h1,'Displayname','Fitness M?dio');
+    set(h2,'Displayname','Fitness M?ximo');
     legend('Location','southeast')
 %     plot(best_fit_plot,'g');
     grid;
