@@ -16,7 +16,7 @@
     
     for i=1:size(obs,1)
         hold on
-        plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
+        plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'k');
     end
 %     axis xy
     axis([xmin xmax ymin ymax])

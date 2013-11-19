@@ -1,4 +1,4 @@
-function [fit,num_rot_need] = guloso(n_routers)
+function [fit] = guloso(n_routers)
 
     table = evalin('base','table');
     grain = evalin('base', 'grain');

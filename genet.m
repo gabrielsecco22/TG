@@ -17,16 +17,23 @@
     
     %First Individuals Generator
     
+   
      
      if size(pop,1)==num_individuals
         population = pop;
      else
         population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers); 
      end
-
-    
+        
+     tic
+     Matrand =  randi([-16 16],num_individuals,2*n_routers);
+     cabra = first_individuals(n_routers);
+     for t =1:num_individuals
+         population(t,:) = cabra;
+     end
    
-    
+     population = mod(population + Matrand,2^grain);
+    toc
 
     %Initial allocations
     best_fit=0;

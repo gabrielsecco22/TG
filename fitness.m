@@ -29,8 +29,10 @@ range_router=evalin('base','range_router');
 vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
+cobertura = (sum(coverage_list))/num_sensor;
+minCoverage = 0.98;
 
-if (sum(coverage_list))/num_sensor > 0.9
+if  cobertura >= minCoverage
     for i=1:num_rot
         for j=1:num_rot
 
@@ -87,7 +89,7 @@ else
     tam_cc = 0.5*num_rot;
 end
 
-fitness = 7*(sum(coverage_list))/num_sensor + 2*tam_cc/num_rot + sum(sum(Adj))/(num_rot^2);
+fitness = 7*cobertura + 2*tam_cc/num_rot + sum(sum(Adj))/(num_rot^2);
 if fitness < 0
    fitness = 0; 
 end
