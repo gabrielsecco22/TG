@@ -1,4 +1,4 @@
-function [fitness] = fitness(individual,table)
+function [fitness,Adj] = fitness(individual,table)
 
 num_sensor = size(table,3)-1;
 coverage_list = zeros(1,num_sensor);

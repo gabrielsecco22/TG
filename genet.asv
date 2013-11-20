@@ -153,14 +153,26 @@
     end
     
     %giant component indicator plot
-    
+    drawlines = 1;
     for i=1:size(B,2)
         plot(best_ind(1,2*B(1,i)-1),2^grain - best_ind(1,2*B(1,i)),'bo');
         
        
     end
-    
-   
+        
+    for i = 1:size(A,1)
+        for j = i:size(A,1)
+            if drawlines == 1
+              
+                dlx1 = best_ind(1,2*B(1,i)-1);
+                dly1 = best_ind(1,2*B(1,i));
+                dlx2 = best_ind(1,2*B(1,j)-1);
+                dly2 = best_ind(1,2*B(1,j));
+                plot([dlx1 dlx2],2^grain - [dly1 dly2],'r')
+
+            end
+        end
+    end
     
     
     for i=1:size(sens,1)
@@ -203,20 +215,6 @@
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
     
-    %Plot router's giant component interconection lintes.
-    drawlines = 1;
-    for i = 1:size(A,1)
-        for j = i:size(A,1)
-            if drawlines == 1 & A(i,j) ==1
-                dlx1 = best_ind(1,2*i-1);
-                dly1 = best_ind(1,2*i);
-                dlx2 = best_ind(1,2*j-1);
-                dly2 = best_ind(1,2*j);
-                plot([dlx1 dlx2],2^grain - [dly1 dly2],'m')
-            end
-        end
-    end
-    
 %     axis xy
     axis([xmin xmax ymin ymax])
     axis on
@@ -228,8 +226,8 @@
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
     axis([0 num_iterations 0 11])
-    set(h1,'Displayname','Fitness Médio');
-    set(h2,'Displayname','Fitness Máximo');
+    set(h1,'Displayname','Fitness M?dio');
+    set(h2,'Displayname','Fitness M?ximo');
     legend('Location','southeast')
 %     plot(best_fit_plot,'g');
     grid;
