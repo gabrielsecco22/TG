@@ -30,7 +30,7 @@ vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
 cobertura = (sum(coverage_list))/num_sensor;
-minCoverage = 0.98;
+minCoverage = 0.99;
 
 if  cobertura >= minCoverage
     for i=1:num_rot

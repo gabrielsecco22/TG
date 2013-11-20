@@ -112,7 +112,7 @@
 
         %Perform mutation
         for k=1:num_individuals
-            new_generation(k) = mutation(new_generation(k),grain);
+            new_generation(k,:) = mutation(new_generation(k,:),grain);
         end
 
         population = new_generation;

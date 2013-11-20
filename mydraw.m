@@ -11,12 +11,12 @@
     hold on
     
     for i=1:size(sens,1)
-        plot(sens(i,1),2^grain - sens(i,2),'r*')
+        plot(sens(i,1), sens(i,2),'r*')
     end
     
     for i=1:size(obs,1)
         hold on
-        plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'k');
+        plot([obs(i,1),obs(i,3)],[obs(i,2),obs(i,4)],'k');
     end
 %     axis xy
     axis([xmin xmax ymin ymax])
@@ -43,6 +43,5 @@
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
     
-%     axis xy
     axis([xmin xmax ymin ymax])
     axis on
