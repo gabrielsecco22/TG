@@ -1,4 +1,4 @@
-    function [best_fit] = genet(n_routers,num_iterations,num_individuals,num_teste,pop)
+    function [best_fit,last_avg] = genet(n_routers,num_iterations,num_individuals,num_teste,pop)
     
     %Constants and variables
     table = evalin('base','table');
@@ -11,6 +11,7 @@
     isperfect = 0;
     perfectfound = 0;
     indexofperfect = 0;
+    num_exec = 0;
     
     %Plot variables
     xmin= -50;
@@ -51,14 +52,15 @@
     %Stopping criteria = number of generations
     total_time = 0;
     for n=1:num_iterations
+        
         %Condição de parada por saida perfeita.  
-        if perfectfound == 1
-            best_ind = population(indexofperfect,:);
-            best_fit = fitness(best_ind,table);
-            break;
-        end
-        
-        
+%         if perfectfound == 1
+%             best_ind = population(indexofperfect,:);
+%             best_fit = fitness(best_ind,table);
+%             break;
+%         end
+%         
+        num_exec = num_exec +1;
         
         %Fitness function evaluation for each individual
         tic
@@ -129,19 +131,18 @@
         total_time = total_time +toc;
         
         %condição de parada por convergencia
-        if (best_fit - avg_fit(n) < 0.5) && n > 100 && best_fit > 8
-            avg_fit(n)
-            break;
-        end
+%         if (best_fit - avg_fit(n) < 0.5) && n > 100
+%             avg_fit(n)
+%             break;
+%         end
 
     end
-        total_time
     
+    last_avg = avg_fit(num_exec);
     
-    rout_list=[];
-    
+    rout_list =zeros(size(best_ind,2)/2,2);
     for i=1:size(best_ind,2)/2
-        rout_list=[rout_list;best_ind(1,2*i-1),best_ind(1,2*i)];
+        rout_list(i,:)=[best_ind(1,2*i-1) best_ind(1,2*i)];
     end
     
     
@@ -160,8 +161,8 @@
     table_final_router=create_table(rout_list,obs,grain,range_router);
 
     
-    [f A]=fitness(best_ind,table_final_router)
-    B=largestcomponent(A)
+    [f A]=fitness(best_ind,table_final_router);
+    B=largestcomponent(A);
     
     %router plot
     for i=1:size(best_ind,2)/2
@@ -218,7 +219,7 @@
     drawlines = 1;
     for i = 1:size(A,1)
         for j = i:size(A,1)
-            if drawlines == 1 & A(i,j) ==1
+            if drawlines == 1 && A(i,j) ==1
                 dlx1 = best_ind(1,2*i-1);
                 dly1 = best_ind(1,2*i);
                 dlx2 = best_ind(1,2*j-1);
@@ -238,7 +239,7 @@
     hold on
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
-    axis([0 num_iterations 0 11])
+    axis([1 num_iterations 0 11])
     set(h1,'Displayname','Fitness Médio');
     set(h2,'Displayname','Fitness Máximo');
     legend('Location','southeast')
