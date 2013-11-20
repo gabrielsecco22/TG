@@ -1,9 +1,9 @@
 function individual = mutation(individual, grain)
     
     numbits = grain * size(individual,2);
-    constant = 1/10;
+    constant = 1/5;
     probability = constant / numbits;
-
+%     probability = 0.001;
     
     for k=1:size(individual,2)
         mask=0;
