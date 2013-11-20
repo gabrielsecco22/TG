@@ -7,6 +7,10 @@
     range_router = evalin('base','range_router');
     obs = evalin('base', 'obs');
     sens=evalin('base','sens');
+    adjMat = zeros(num_individuals);
+    isperfect = 0;
+    perfectfound = 0;
+    indexofperfect = 0;
     
     %Plot variables
     xmin= -50;
@@ -47,13 +51,24 @@
     %Stopping criteria = number of generations
     total_time = 0;
     for n=1:num_iterations
-               
+        %Condição de parada por saida perfeita.  
+        if perfectfound == 1
+            best_ind = population(indexofperfect,:);
+            best_fit = fitness(best_ind,table);
+            break;
+        end
+        
         
         
         %Fitness function evaluation for each individual
         tic
+        
         for k=1:num_individuals
-           [fitness_values(k,1)] = fitness(population(k,:),table);
+           [fitness_values(k,1), adjMat, isperfect] = fitness(population(k,:),table);
+           if isperfect == 1
+               perfectfound = 1;
+               indexofperfect = k;
+            end
         end
         toc
         
@@ -70,10 +85,6 @@
             best_fit = max_fit;
             n;
             best_ind = population(index_of_max,:);
-            %Perfect individual found
-            if best_fit == 2*(size(sens,1)^2) + n_routers^2
-                break;
-            end
         end
         
         best_fit_plot(n) = best_fit;
@@ -106,7 +117,6 @@
         for k=1:num_individuals/2
             x = couples(2*k-1,1);
             y = couples(2*k,1);
-            2*k;
             new_generation(2*k-1:2*k,:) = crossover(population(x,:),population(y,:),grain);
         end
 
@@ -117,6 +127,12 @@
 
         population = new_generation;
         total_time = total_time +toc;
+        
+        %condição de parada por convergencia
+        if (best_fit - avg_fit(n) < 0.5) && n > 100 && best_fit > 8
+            avg_fit(n)
+            break;
+        end
 
     end
         total_time
@@ -177,12 +193,7 @@
     
     
     %Router_range plot for giant component visualization
-    
-    
-   
     table_final_router=mat2gray(table_final_router(:,:,1));
-    
-    
     figure(6);
     hold off
     clf

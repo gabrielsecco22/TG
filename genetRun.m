@@ -1,3 +1,5 @@
+clear
+
 fileName = 'teste';
 fileExt = '.mat';
 file = 'teste1.mat';
@@ -6,37 +8,31 @@ figCCName = 'ccteste';
 figAvgName = 'avgteste';
 figExt ='.jpg';
 
-for i = 1:2
+matTest = [1 2 3 4 5 6 7 8 9 10];
+matRot = [4 4 8 8 15 12 18 18 26 20];
+matIt = [50 100 200 200 ];
+matPop = [];
+fits1 = zeros(size(matTest,2),1);
+
+
+for sqi = 1:size(matTest,2)
     
-    file = strcat(fileName,strcat(num2str(i),fileExt));
-    
+    file = strcat(fileName,strcat(num2str(matTest(1,sqi)),fileExt));
+    fits1
     load (file)
     
-    sens=evalin('base','sens');
-
-    tam = size(sens,1);
+    range_router = 200;
     
-    [fit,num_need]=guloso(1);
-    n = 2;
-    while num_need == -1
-        [fit,num_need]=guloso(n);
-        n=n+1;
+    for ks = 1:100
+        ns = genet(matRot(1,sqi),matIt(1,sqi),matPop(1,sqi));
+        if ns > fits1(sqi,1)
+            fits1(sqi,1)=ns;
+        end
     end
 
-    n= num_need
-    tic;
-    curr_fit =genet(n)
-    tempo_Fase1 = toc
-    %Must be changed if fitness expression changes.
-    fit_perfect_solution = 2*tam^2 + n^2
 
-    while curr_fit < fit_perfect_solution
-        n=n+1;
-        curr_fit=genet(n)
-        fit_perfect_solution= 2*tam^2 + n^2
+end
 
-    end
-    tempoFase2 = toc - tempo_Fase1
     hgexport(figure(3), strcat(figCoverageName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
     hgexport(figure(6), strcat(figCCName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');
     hgexport(figure(7), strcat(figAvgName,strcat(num2str(i),figExt)), hgexport('factorystyle'), 'Format', 'jpeg');

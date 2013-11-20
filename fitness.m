@@ -1,5 +1,5 @@
-function [fitness,Adj] = fitness(individual,table)
-
+function [fitness,Adj,isperfect] = fitness(individual,table)
+isperfect =0;
 num_sensor = size(table,3)-1;
 coverage_list = zeros(1,num_sensor);
 bagua_list =zeros(1,num_sensor);
@@ -87,6 +87,10 @@ if  cobertura >= minCoverage
     tam_cc=size(B,2);
 else
     tam_cc = 0.5*num_rot;
+end
+
+if tam_cc/num_rot ==1 && cobertura ==1
+   isperfect =1; 
 end
 
 fitness = 7*cobertura + 2*tam_cc/num_rot + sum(sum(Adj))/(num_rot^2);

@@ -7,6 +7,10 @@
     range_router = evalin('base','range_router');
     obs = evalin('base', 'obs');
     sens=evalin('base','sens');
+    adjMat = zeros(num_individuals);
+    isperfect = 0;
+    perfectfound = 0;
+    indexofperfect = 0;
     
     %Plot variables
     xmin= -50;
@@ -47,13 +51,22 @@
     %Stopping criteria = number of generations
     total_time = 0;
     for n=1:num_iterations
-               
-        
+        %Condição de parada por função perfeita.  
+        if perfectfound == 1
+            best_ind = population(indexofperfect,:);
+            best_fit = fitness(best_ind,table);
+            break;
+        end
         
         %Fitness function evaluation for each individual
         tic
+        
         for k=1:num_individuals
-           [fitness_values(k,1)] = fitness(population(k,:),table);
+           [fitness_values(k,1), adjMat, isperfect] = fitness(population(k,:),table);
+           if isperfect == 1
+               perfectfound = 1;
+               indexofperfect = k;
+            end
         end
         toc
         
@@ -70,10 +83,6 @@
             best_fit = max_fit;
             n;
             best_ind = population(index_of_max,:);
-            %Perfect individual found
-            if best_fit == 2*(size(sens,1)^2) + n_routers^2
-                break;
-            end
         end
         
         best_fit_plot(n) = best_fit;
@@ -153,26 +162,14 @@
     end
     
     %giant component indicator plot
-    drawlines = 1;
+    
     for i=1:size(B,2)
         plot(best_ind(1,2*B(1,i)-1),2^grain - best_ind(1,2*B(1,i)),'bo');
         
        
     end
-        
-    for i = 1:size(A,1)
-        for j = i:size(A,1)
-            if drawlines == 1
-              
-                dlx1 = best_ind(1,2*B(1,i)-1);
-                dly1 = best_ind(1,2*B(1,i));
-                dlx2 = best_ind(1,2*B(1,j)-1);
-                dly2 = best_ind(1,2*B(1,j));
-                plot([dlx1 dlx2],2^grain - [dly1 dly2],'r')
-
-            end
-        end
-    end
+    
+   
     
     
     for i=1:size(sens,1)
@@ -215,6 +212,20 @@
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
     
+    %Plot router's giant component interconection lintes.
+    drawlines = 1;
+    for i = 1:size(A,1)
+        for j = i:size(A,1)
+            if drawlines == 1 & A(i,j) ==1
+                dlx1 = best_ind(1,2*i-1);
+                dly1 = best_ind(1,2*i);
+                dlx2 = best_ind(1,2*j-1);
+                dly2 = best_ind(1,2*j);
+                plot([dlx1 dlx2],2^grain - [dly1 dly2],'m')
+            end
+        end
+    end
+    
 %     axis xy
     axis([xmin xmax ymin ymax])
     axis on
@@ -226,8 +237,8 @@
     h1=plot(avg_fit,'r');
     h2=plot(max_fit_plot,'b');
     axis([0 num_iterations 0 11])
-    set(h1,'Displayname','Fitness M?dio');
-    set(h2,'Displayname','Fitness M?ximo');
+    set(h1,'Displayname','Fitness Médio');
+    set(h2,'Displayname','Fitness Máximo');
     legend('Location','southeast')
 %     plot(best_fit_plot,'g');
     grid;
