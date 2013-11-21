@@ -18,7 +18,7 @@ for sqi = 9:size(matTest,2)
     file = strcat(fileName,strcat(num2str(matTest(1,sqi)),fileExt));
     load (file)
     range_router = 200;
-    [fits(sqi),avgs(sqi)] = genet(matRot(1,sqi),matIt(1,sqi),matPop(1,sqi),300+sqi,[]);
+    [fits(sqi),avgs(sqi),perfectfound] = genet(matRot(1,sqi),matIt(1,sqi),matPop(1,sqi),300+sqi,[]);
     fits
     avgs
 

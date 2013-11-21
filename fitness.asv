@@ -32,7 +32,7 @@ vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
 cobertura = (sum(coverage_list))/num_sensor;
-minCoverage = 0.95;
+minCoverage = 0.60;
 
 if  cobertura >= minCoverage
     for i=1:num_rot
@@ -92,6 +92,7 @@ else
     tam_cc = 0.5*num_rot;
 end
 
+cobertura_cc = 
 %covered by giant component
 if  cobertura >= minCoverage
     for k=1:tam_cc
@@ -108,10 +109,14 @@ if  cobertura >= minCoverage
 end
 
 
-
-if cobertura_cc ==1
-   isperfect =1; 
-end
+% 
+% if tam_cc/num_rot ==1 && cobertura ==1
+%    isperfect =1; 
+%    coverage_list
+%    isperfect
+%    tam_cc/num_rot
+%    cobertura
+% end
 
 fitness = (10*cobertura_cc + 5*cobertura + 3*tam_cc/num_rot + 2*sum(sum(Adj))/(num_rot^2))/2;
 if fitness < 0

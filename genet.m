@@ -1,4 +1,4 @@
-    function [best_fit,last_avg] = genet(n_routers,num_iterations,num_individuals,num_teste,pop)
+    function [best_fit,last_avg,perfectfound] = genet(n_routers,num_iterations,num_individuals,num_teste,pop)
     
     %Constants and variables
     table = evalin('base','table');
@@ -30,7 +30,7 @@
         population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers); 
      end
         
-     tic
+     
      Matrand =  randi([-16 16],num_individuals,2*n_routers);
      cabra = first_individuals(n_routers);
      for t =1:num_individuals
@@ -38,7 +38,7 @@
      end
    
      population = mod(population + Matrand,2^grain);
-    toc
+    
 
     %Initial allocations
     best_fit=0;
@@ -54,12 +54,12 @@
     for n=1:num_iterations
         
         %Condição de parada por saida perfeita.  
-%         if perfectfound == 1
-%             best_ind = population(indexofperfect,:);
-%             best_fit = fitness(best_ind,table);
-%             break;
-%         end
-%         
+        if perfectfound == 1
+            best_ind = population(indexofperfect,:);
+            best_fit = fitness(best_ind,table);
+            break;
+        end
+        
         num_exec = num_exec +1;
         
         %Fitness function evaluation for each individual
@@ -126,8 +126,9 @@
         for k=1:num_individuals
             new_generation(k,:) = mutation(new_generation(k,:),grain);
         end
-
-        population = new_generation;
+        if perfectfound ~= 1
+            population = new_generation;
+        end
         total_time = total_time +toc;
         
         %condição de parada por convergencia
