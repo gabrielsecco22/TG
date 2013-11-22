@@ -12,34 +12,39 @@
     perfectfound = 0;
     indexofperfect = 0;
     num_exec = 0;
+    population = [];
     
     %Plot variables
-    xmin= -50;
-    xmax= 562;
-    ymin= -50;
-    ymax= 562;
+    xmin= -round(2^grain)/20;
+    xmax= 2^grain - xmin;
+    ymin= xmin;
+    ymax= xmax;
     
     
     %First Individuals Generator
     
-   
-     
-     if size(pop,1)==num_individuals
-        population = pop;
-     else
-        population =randi(2^grain,[num_individuals,2*n_routers])-ones(num_individuals,2*n_routers); 
-     end
-        
-     
-     Matrand =  randi([-16 16],num_individuals,2*n_routers);
-     cabra = first_individuals(n_routers);
-     for t =1:num_individuals
-         population(t,:) = cabra;
-     end
-   
-     population = mod(population + Matrand,2^grain);
-    
+     rp = 2^(grain-5);
+     pop_n_routers = size(pop,2)/2;
+     diff =n_routers - pop_n_routers;
+     if size(pop,1)==num_individuals && diff ==0
+         population = pop;
+     else if diff > 0
+         if diff == n_routers
+            Matrand =  randi([-rp rp],num_individuals,2*n_routers);
+            cabra = first_individuals(n_routers);
+            for t =1:num_individuals
+                population(t,:) = cabra;
+            end
+         population = mod(population + Matrand,2^grain);
 
+         else
+             Matrand =  randi([1 2^grain-1],num_individuals,2*diff);
+             population = [pop Matrand];
+         end
+         end
+     end
+
+    
     %Initial allocations
     best_fit=0;
     best_ind=0;
@@ -97,7 +102,8 @@
             strcat('avg= ',num2str(avg_fit(n)),' best= ',num2str(best_fit),' iteration= ',num2str(n))
             
             if mod(n,50)==0
-                save(strcat('result_teste',num2str(num_teste),'.mat'),'best_ind','population');
+                save(strcat('result_teste',num2str(num_teste),'.mat'),'best_ind','population','avg_fit','best_fit_plot');
+                total_time
             end
             
         end
@@ -126,8 +132,9 @@
         for k=1:num_individuals
             new_generation(k,:) = mutation(new_generation(k,:),grain);
         end
-        if perfectfound 
-        population = new_generation;
+        if perfectfound ~= 1
+            population = new_generation;
+        end
         total_time = total_time +toc;
         
         %condição de parada por convergencia
@@ -173,8 +180,6 @@
     
     for i=1:size(B,2)
         plot(best_ind(1,2*B(1,i)-1),2^grain - best_ind(1,2*B(1,i)),'bo');
-        
-       
     end
     
    

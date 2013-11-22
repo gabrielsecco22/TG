@@ -32,11 +32,11 @@ vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
 cobertura = (sum(coverage_list))/num_sensor;
-minCoverage = 0.95;
+minCoverage = 0.98;
 
 if  cobertura >= minCoverage
     for i=1:num_rot
-        for j=1:num_rot
+        for j=i:num_rot
 
             xi=individual(1,2*i-1);
             yi=individual(1,2*i);
@@ -89,7 +89,7 @@ if  cobertura >= minCoverage
     tam_cc=size(B,2);
     
 else
-    tam_cc = 0.5*num_rot;
+    tam_cc = 0.2*num_rot;
 end
 
 %covered by giant component

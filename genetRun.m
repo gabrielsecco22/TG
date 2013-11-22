@@ -14,7 +14,7 @@ matPop = [100 100 200 200 400 400 600 600 1600 800];
 fits1 = zeros(size(matTest,2),1);
 avgs = zeros(size(matTest,2),1);
 
-for sqi = 9:size(matTest,2)
+for sqi = 1:size(matTest,2)
     file = strcat(fileName,strcat(num2str(matTest(1,sqi)),fileExt));
     load (file)
     range_router = 200;

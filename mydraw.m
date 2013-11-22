@@ -1,9 +1,9 @@
     
     %Plot variables
-    xmin= -50;
-    xmax= 562;
-    ymin= -50;
-    ymax= 562;
+    xmin= -round(2^grain)/20;
+    xmax= 2^grain - xmin;
+    ymin= xmin;
+    ymax= xmax;
 
     %Solution Plot
     figure(1);

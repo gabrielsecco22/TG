@@ -1,4 +1,4 @@
-function [fit] = guloso(n_routers)
+function [fit,num_rot_need] = guloso(n_routers)
 
     table = evalin('base','table');
     grain = evalin('base', 'grain');
@@ -20,7 +20,7 @@ function [fit] = guloso(n_routers)
             num_rot_need = k-1;
             break;
         else
-            individual(1,2*k-1:2*k)=[i,j];
+            individual(1,2*k-1:2*k)=[i,j+1];
         end
         
         for sen=2:size(table,3)
@@ -43,7 +43,8 @@ function [fit] = guloso(n_routers)
     i=i(j);
     table(i,j,1);
     
-    fit=fitness(individual,table_copy);
+    [fit A]=fitness(individual,table_copy);
+    B=largestcomponent(A);
     
     
     rout_list=[];
@@ -54,26 +55,30 @@ function [fit] = guloso(n_routers)
     
     
     %Plotting the solution
-%     table_final=create_table(rout_list,obs,grain,range);
-%     table_final=mat2gray(table_final(:,:,1));
-%     
-%     figure(4);
-%     hold off
-%     clf
-%     imshow(imrotate(table_final,90));
-%     hold on
-%     
-%     for i=1:size(individual,2)/2
-%         plot(individual(1,2*i-1),2^grain - individual(1,2*i),'b+');
-%     end
-%     
-%     for i=1:size(sens,1)
-%         plot(sens(i,1),2^grain - sens(i,2),'r*')
-%     end
-%     
-%     for i=1:size(obs,1)
-%         hold on
-%         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
-%     end
+    table_final=create_table(rout_list,obs,grain,range);
+    table_final=mat2gray(table_final(:,:,1));
+    
+    figure(4);
+    hold off
+    clf
+    imshow(imrotate(table_final,90));
+    hold on
+    
+    for i=1:size(individual,2)/2
+        plot(individual(1,2*i-1),2^grain - individual(1,2*i),'b+');
+    end
+    
+    for i=1:size(B,2)
+        plot(individual(1,2*B(1,i)-1),2^grain - individual(1,2*B(1,i)),'bo');
+    end
+    
+    for i=1:size(sens,1)
+        plot(sens(i,1),2^grain - sens(i,2),'r*')
+    end
+    
+    for i=1:size(obs,1)
+        hold on
+        plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
+    end
 end
     
