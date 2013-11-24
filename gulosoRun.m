@@ -8,8 +8,8 @@ figCCName = 'ccteste';
 figAvgName = 'avgteste';
 figExt ='.jpg';
 
-matTest = [1 2 3 3 3 4 5 6 6 7 8 9 9 10];
-matRot = [4 4 8 9 10 8 15 11 12 18 18 26 30 20];
+matTest = [1 2 3 4 5 6 7 8 9 10];
+matRot = [4 4 8 8 15 12 18 18 26 20];
 fits1 = zeros(size(matTest,2),1);
 
 

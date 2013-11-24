@@ -55,30 +55,30 @@ function [fit,num_rot_need] = guloso(n_routers)
     
     
     %Plotting the solution
-    table_final=create_table(rout_list,obs,grain,range);
-    table_final=mat2gray(table_final(:,:,1));
-    
-    figure(4);
-    hold off
-    clf
-    imshow(imrotate(table_final,90));
-    hold on
-    
-    for i=1:size(individual,2)/2
-        plot(individual(1,2*i-1),2^grain - individual(1,2*i),'b+');
-    end
-    
-    for i=1:size(B,2)
-        plot(individual(1,2*B(1,i)-1),2^grain - individual(1,2*B(1,i)),'bo');
-    end
-    
-    for i=1:size(sens,1)
-        plot(sens(i,1),2^grain - sens(i,2),'r*')
-    end
-    
-    for i=1:size(obs,1)
-        hold on
-        plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
-    end
+%     table_final=create_table(rout_list,obs,grain,range);
+%     table_final=mat2gray(table_final(:,:,1));
+%     
+%     figure(4);
+%     hold off
+%     clf
+%     imshow(imrotate(table_final,90));
+%     hold on
+%     
+%     for i=1:size(individual,2)/2
+%         plot(individual(1,2*i-1),2^grain - individual(1,2*i),'b+');
+%     end
+%     
+%     for i=1:size(B,2)
+%         plot(individual(1,2*B(1,i)-1),2^grain - individual(1,2*B(1,i)),'bo');
+%     end
+%     
+%     for i=1:size(sens,1)
+%         plot(sens(i,1),2^grain - sens(i,2),'r*')
+%     end
+%     
+%     for i=1:size(obs,1)
+%         hold on
+%         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
+%     end
 end
     

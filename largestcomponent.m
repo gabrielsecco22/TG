@@ -33,7 +33,8 @@ cm=find(c==max(c));
     
 B=find(x==cm(1));
 
-
 end
+
+
                     
         
