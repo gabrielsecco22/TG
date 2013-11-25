@@ -32,7 +32,7 @@ vert_list=evalin('base', 'vertl');
 obstacle_list=evalin('base', 'obs');
 
 cobertura = (sum(coverage_list))/num_sensor;
-minCoverage = 0;
+minCoverage = 0.99;
 
 if  cobertura >= minCoverage
     for i=1:num_rot
@@ -87,18 +87,6 @@ if  cobertura >= minCoverage
     end
     B=largestcomponent(Adj);
     tam_cc=size(B,2);
-    t2 =1;
-    for k =1:size(Adj,1)
-        temp = compConex(Adj,1,0);
-        if temp>t2
-           t2 = temp; 
-        end
-    end
-    if t2~=tam_cc
-       t2
-       tam_cc
-    end
-    
 else
     tam_cc = 0.2*num_rot;
 end
@@ -121,7 +109,7 @@ end
 
 
 if cobertura_cc ==1
-   isperfect =1; 
+%    isperfect =1; 
 end
 
 % fitness = (10*cobertura_cc + 5*cobertura + 3*tam_cc/num_rot + 2*sum(sum(Adj))/(num_rot^2))/2;

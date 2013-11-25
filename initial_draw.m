@@ -44,8 +44,8 @@ function[table,sensor_list,obstacle_list,vert_list]= initial_draw()
         end
         
         [x,y,key] = ginput(1);
-        x=uint16(x+1);
-        y=uint16(y+1);
+        x=uint16(x);
+        y=uint16(y);
         
     end
     
