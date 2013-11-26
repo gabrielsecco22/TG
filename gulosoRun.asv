@@ -9,7 +9,7 @@ figAvgName = 'avgteste';
 figExt ='.jpg';
 
 matTest = [1 2 3 4 5 6 7 8 9 10];
-matRot = [6 5 14 12 20 17 21 18 40 25];
+matRot = [6 5 14 12 20 17 21 18 40 21];
 fits1 = zeros(size(matTest,2),1);
 
 

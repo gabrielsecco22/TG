@@ -26,6 +26,7 @@
      rp = 2^(grain-5);
      pop_n_routers = size(pop,2)/2;
      diff =n_routers - pop_n_routers;
+     Matrand =  zeros(num_individuals,2*n_routers);
      if size(pop,1)==num_individuals && diff ==0
          population = pop;
      else if diff > 0

@@ -20,7 +20,7 @@ function [fit,num_rot_need] = guloso(n_routers)
             num_rot_need = k-1;
             break;
         else
-            individual(1,2*k-1:2*k)=[i,j+1];
+            individual(1,2*k-1:2*k)=[i-1,j-1];
         end
         
         for sen=2:size(table,3)

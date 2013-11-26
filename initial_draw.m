@@ -79,7 +79,7 @@ function[table,sensor_list,obstacle_list,vert_list]= initial_draw()
         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
     end
     for i=1:size(sens,1)
-       plot(sens(i,1),2^grain - sens(i,2),'r*')
+       plot(sens(i,1),2^grain - sens(i,2),'b+')
     end
     
     

@@ -16,7 +16,7 @@ function [individual] = first_individuals(n_routers)
             num_rot_need = k-1;
             break;
         else
-            individual(1,2*k-1:2*k)=[i,j];
+            individual(1,2*k-1:2*k)=[i-1,j-1];
         end
         
         for sen=2:size(table,3)
