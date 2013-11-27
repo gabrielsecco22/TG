@@ -100,11 +100,10 @@
         
         if mod(n,10)==0
             
-            strcat('avg= ',num2str(avg_fit(n)),' best= ',num2str(best_fit),' iteration= ',num2str(n))
+            strcat('avg= ',num2str(avg_fit(n)),' best= ',num2str(best_fit),' iteration= ',num2str(n),' total_time= ',num2str(total_time))
             
             if mod(n,50)==0
                 save(strcat('result_teste',num2str(num_teste),'.mat'),'best_ind','population','avg_fit','best_fit_plot');
-                total_time
             end
             
         end

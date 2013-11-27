@@ -12,6 +12,11 @@ function [best_fit] = aleatorio(n_routers,num_iterations,num_individuals)
     table_copy=table;
     
     individual=zeros(1,2*n_routers);
+    
+    avg_fit = zeros(1,num_iterations);
+    max_fit_plot = zeros(1,num_iterations);
+    best_fit_plot = zeros(1,num_iterations);
+    
     for i=1:num_iterations
         population =randi(2^grain,[num_individuals,2*n_routers]);
         population= population -ones(num_individuals, 2*n_routers);
@@ -21,15 +26,33 @@ function [best_fit] = aleatorio(n_routers,num_iterations,num_individuals)
         end
 
         [max_fit,index_of_max]=max(fitness_values);
-        
+         max_fit_plot(i) =max_fit;
+         avg_fit(i) = sum(fitness_values)/num_individuals;
+         
         if max_fit > best_fit
-            best_fit = max_fit
+            best_fit = max_fit;
             best_ind = population(index_of_max,:);
             if best_fit == size(sens,1)^2 + size(sens,1)
                 break;
             end
         end
     end
+    
+    figure(7);
+    hold off
+    clf
+    hold on
+    h1=plot(avg_fit,'r');
+    h2=plot(max_fit_plot,'b');
+    axis([1 num_iterations 0 11])
+    set(h1,'Displayname','Fitness Médio');
+    set(h2,'Displayname','Fitness Máximo');
+    legend('Location','north')
+%     plot(best_fit_plot,'g');
+    grid;
+    
+    
+    
     
    %%% hora de printar!!
 %     rout_list=[];
@@ -62,5 +85,7 @@ function [best_fit] = aleatorio(n_routers,num_iterations,num_individuals)
 %         hold on
 %         plot([obs(i,1),obs(i,3)],2^grain-[obs(i,2),obs(i,4)],'g');
 %     end
+
+    
 end
     
